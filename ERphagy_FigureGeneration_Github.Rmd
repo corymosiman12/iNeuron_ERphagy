@@ -9,6 +9,8 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+filePath <- rstudioapi::getSourceEditorContext()$path
+baseDir <- dirname(filePath)
 ```
 
 ## iNeuron Autophagy
@@ -33,7 +35,7 @@ library(purrr)
 
 ```{r}
 ## import site localizations
-ss_organelle_list<-read.csv("C:/Harper/Side_analysis/Melissa_shiny/ERphagy/github/iNeuron_ERphagy/iNeuron_ERphagy/ss_organelle_list2_wh_annotation_cytoAddedBasedGO_ERannotation.csv")
+ss_organelle_list<-read.csv(file.path(baseDir, "ss_organelle_list2_wh_annotation_cytoAddedBasedGO_ERannotation.csv"))
 
 #tidy form annotations for localizations
 ss_organelle_list<-ss_organelle_list%>%
@@ -74,7 +76,7 @@ Generate heatmaps to Alban's differentation data.
 
 ```{r}
 ## import results from Alban's neurodiff data
-ao_data<-read.csv("C:/Harper/Side_analysis/Melissa_shiny/ERphagy/github/iNeuron_ERphagy/iNeuron_ERphagy/data/ShinyApp_hotelling_results.csv")
+ao_data<-read.csv(file.path(baseDir, "data", "ShinyApp_hotelling_results.csv"))
 ## left join simple localizations
 diff_df_full<-left_join(ao_data,organelle_input_er_simple,by="Gene.Symbol", relationship = "many-to-many")%>%
   distinct()
